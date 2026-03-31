@@ -1473,4 +1473,4 @@ async def list_resources(
 
 if __name__ == "__main__":
     # Start the MCP server on stdio transport
-    mcp.run(transport="stdio")
+    mcp.run(transport="sse", host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
