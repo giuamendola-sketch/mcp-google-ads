@@ -14,7 +14,7 @@ from google.auth.exceptions import RefreshError
 import logging
 
 # MCP
-from mcp import FastMCP
+from mcp.server.fastmcp import FastMCP
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
