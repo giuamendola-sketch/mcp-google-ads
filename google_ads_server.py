@@ -1472,5 +1472,6 @@ async def list_resources(
     return await run_gaql(customer_id, query)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-    mcp.run(transport="sse", sse_server_host="0.0.0.0", sse_server_port=port)
+    os.environ.setdefault("HOST", "0.0.0.0")
+    os.environ.setdefault("PORT", "8000")
+    mcp.run(transport="sse")
