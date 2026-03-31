@@ -14,7 +14,7 @@ from google.auth.exceptions import RefreshError
 import logging
 
 # MCP
-from mcp.server.fastmcp import FastMCP
+from mcp import FastMCP
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -1472,7 +1472,5 @@ async def list_resources(
     return await run_gaql(customer_id, query)
 
 if __name__ == "__main__":
-    # Start the MCP server on SSE transport
-    os.environ["FASTMCP_HOST"] = "0.0.0.0"
-    os.environ["FASTMCP_PORT"] = str(os.environ.get("PORT", "8080"))
-    mcp.run(transport="sse")
+    port = int(os.environ.get("PORT", 8000))
+    mcp.run(transport="sse", sse_server_host="0.0.0.0", sse_server_port=port)
