@@ -1473,14 +1473,19 @@ async def list_resources(
 
 if __name__ == "__main__":
     import uvicorn
+    from starlette.middleware.base import BaseHTTPMiddleware
+    from starlette.applications import Starlette
+
+    class TrustAllHosts(BaseHTTPMiddleware):
+        async def dispatch(self, request, call_next):
+            request.scope["headers"] = [
+                (k, v) for k, v in request.scope["headers"]
+                if k.lower() != b"host"
+            ] + [(b"host", b"localhost")]
+            return await call_next(request)
+
+    sse_app = mcp.sse_app()
+    sse_app.add_middleware(TrustAllHosts)
+    
     port = int(os.environ.get("PORT", 8080))
-    config = uvicorn.Config(
-        mcp.sse_app(), 
-        host="0.0.0.0", 
-        port=port,
-        forwarded_allow_ips="*",
-        proxy_headers=True
-    )
-    server = uvicorn.Server(config)
-    import asyncio
-    asyncio.run(server.serve())
+    uvicorn.run(sse_app, host="0.0.0.0", port=port, forwarded_allow_ips="*", proxy_headers=True)
