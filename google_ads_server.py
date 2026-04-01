@@ -1474,4 +1474,13 @@ async def list_resources(
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8080))
-    uvicorn.run(mcp.sse_app(), host="0.0.0.0", port=port, forwarded_allow_ips="*")
+    config = uvicorn.Config(
+        mcp.sse_app(), 
+        host="0.0.0.0", 
+        port=port,
+        forwarded_allow_ips="*",
+        proxy_headers=True
+    )
+    server = uvicorn.Server(config)
+    import asyncio
+    asyncio.run(server.serve())
