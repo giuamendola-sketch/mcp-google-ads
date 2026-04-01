@@ -1472,6 +1472,4 @@ async def list_resources(
     return await run_gaql(customer_id, query)
 
 if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(mcp.app, host="0.0.0.0", port=port)
+    print("FastMCP attributes:", [x for x in dir(mcp) if not x.startswith('_')])
