@@ -27,7 +27,8 @@ mcp = FastMCP(
         "google-auth",
         "requests",
         "python-dotenv"
-    ]
+    ],
+    allowed_hosts=["*"],
 )
 
 # Constants and configuration
