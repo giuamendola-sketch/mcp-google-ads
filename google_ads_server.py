@@ -14,6 +14,9 @@ from google.auth.exceptions import RefreshError
 import logging
 # Allow all hosts for Railway deployment
 os.environ["FASTMCP_ALLOWED_HOSTS"] = "*"
+# Patch FastMCP transport security to allow all hosts
+from mcp.server import transport_security
+transport_security.ALLOWED_HOSTS = None
 # MCP
 from mcp.server.fastmcp import FastMCP
 
