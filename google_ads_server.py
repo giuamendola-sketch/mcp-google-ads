@@ -12,7 +12,8 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 from google.auth.exceptions import RefreshError
 import logging
-
+# Allow all hosts for Railway deployment
+os.environ["FASTMCP_ALLOWED_HOSTS"] = "*"
 # MCP
 from mcp.server.fastmcp import FastMCP
 
